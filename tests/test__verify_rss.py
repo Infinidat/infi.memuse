@@ -32,14 +32,14 @@ class VerifyRSSTestCase(unittest.TestCase):
     def tearDown(self):
         clear_eat_memory()
 
-    def test_verify_rss__wrap_class_eat_1mb(self):
+    def test_verify_rss__wrap_class_eat_10mb(self):
         @verify_rss(rss_leftover=512*1024)
         class Foo:
             def foo(self, a, b):
                 return a + b
 
             def leaking_foo(self, a, b):
-                eat_memory(1024 * 1024)
+                eat_memory(10 * 1024 * 1024)
                 return a + b
 
         f = Foo()
@@ -71,10 +71,10 @@ class VerifyRSSTestCase(unittest.TestCase):
 
         self.assertEqual(good_func(1, 2, 3), 6)
     
-    def test_verify_rss__wrap_func_eat_1mb(self):
+    def test_verify_rss__wrap_func_eat_10mb(self):
         @verify_rss(rss_leftover=512*1024)
         def leaking_func():
-            eat_memory(1 * 1024 * 1024)
+            eat_memory(10 * 1024 * 1024)
 
         with self.assertRaises(PotentialMemoryLeakError):
             leaking_func()
