@@ -30,6 +30,7 @@ build/
 dist/
 src/infi/memuse/__version__.py
 .achievements
+bootstrap.py
 
 # scm
 .bzr/
