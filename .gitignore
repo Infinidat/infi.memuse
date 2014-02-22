@@ -41,3 +41,4 @@ bootstrap.py
 src/memuse/__version__.py
 .cache
 eggs
+parts
