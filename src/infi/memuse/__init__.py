@@ -27,11 +27,11 @@ def get_rss():
 
 def get_self_rss():
     pid = getpid()
-    return Process(pid).get_memory_info().rss
+    return Process(pid).memory_info().rss
 
 def get_children_rss():
     pid = getpid()
-    return sum([ child.get_memory_info().rss for child in Process(pid).get_children() ], 0)
+    return sum([ child.memory_info().rss for child in Process(pid).children() ], 0)
 
 def verify_rss(rss_leftover=DEFAULT_ALLOWED_LEFTOVER, ignore_methods=[]):
     def _decorator(func_or_class):
