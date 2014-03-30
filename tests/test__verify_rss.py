@@ -1,7 +1,7 @@
 import unittest
 import gc
 import random
-
+from time import sleep
 from infi.memuse import verify_rss, PotentialMemoryLeakError
 
 mem_pacman = ''
@@ -19,7 +19,7 @@ def eat_memory(amount):
         for j in xrange(1024):
             tmp = tmp + chr((seed + j) % 256)
         mem_pacman = mem_pacman + tmp
-    
+
 def clear_eat_memory():
     global mem_pacman
     mem_pacman = ''
@@ -70,11 +70,12 @@ class VerifyRSSTestCase(unittest.TestCase):
             return a + b + c
 
         self.assertEqual(good_func(1, 2, 3), 6)
-    
-    def test_verify_rss__wrap_func_eat_10mb(self):
+
+    def test_verify_rss__wrap_func_eat_100mb(self):
         @verify_rss(rss_leftover=512*1024)
         def leaking_func():
-            eat_memory(10 * 1024 * 1024)
+            eat_memory(100 * 1024 * 1024)
+            sleep(1)
 
         with self.assertRaises(PotentialMemoryLeakError):
             leaking_func()
