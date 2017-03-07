@@ -6,7 +6,7 @@ from contextlib import contextmanager
 from infi.memuse import get_rss
 
 class GetRSSTestCase(unittest.TestCase):
-    PYTHON_OVERHEAD_MAX_SIZE = 30 * 1024 * 1024
+    PYTHON_OVERHEAD_MAX_SIZE = 40 * 1024 * 1024
 
     def test_get_rss__simple_program(self):
         # We assume here that our very simplistic Python program's RSS is in the range of 
