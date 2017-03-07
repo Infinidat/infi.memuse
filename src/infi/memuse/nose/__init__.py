@@ -21,7 +21,7 @@ class NosePlugin(nose.plugins.Plugin):
 
     def options(self, parser, env):
         nose.plugins.Plugin.options(self, parser, env)
-        parser.add_option('--memuse-leftover', action='store', dest='memuseLeftover', 
+        parser.add_option('--memuse-leftover', action='store', dest='memuseLeftover',
                           default=DEFAULT_ALLOWED_LEFTOVER,
                           help=('Size in bytes of allowed memory footprint "leftover" after the test ends (default=%d)'
                                 % DEFAULT_ALLOWED_LEFTOVER))
@@ -45,7 +45,7 @@ class NosePlugin(nose.plugins.Plugin):
     def prepareTestResult(self, result):
         # Monkey-patch the result object to convert errors created by us to failures.
         prev = result.addError
-        
+
         def monkey_patched_addError(test, err):
             if isinstance(err[1], PotentialMemoryLeakError):
                 result.addFailure(test, err)
