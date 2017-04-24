@@ -18,7 +18,7 @@ class PotentialMemoryLeakError(AssertionError):
 
     def __init__(self, where, baseline_rss, current_rss, rss_leftover):
         super(PotentialMemoryLeakError, self).__init__(self.__MESSAGE__.format(where,
-                                                                               baseline_rss, current_rss, 
+                                                                               baseline_rss, current_rss,
                                                                                current_rss - baseline_rss,
                                                                                rss_leftover))
 
@@ -72,6 +72,6 @@ def __verify_rss_wrap_func(func, rss_leftover):
                 except:
                     where = 'function %s' % (func,)
                 raise PotentialMemoryLeakError(where, rss_baseline, rss_current, rss_leftover)
-            
+
         return result
     return new_func

@@ -6,10 +6,10 @@ from contextlib import contextmanager
 from infi.memuse import get_rss
 
 class GetRSSTestCase(unittest.TestCase):
-    PYTHON_OVERHEAD_MAX_SIZE = 30 * 1024 * 1024
+    PYTHON_OVERHEAD_MAX_SIZE = 40 * 1024 * 1024
 
     def test_get_rss__simple_program(self):
-        # We assume here that our very simplistic Python program's RSS is in the range of 
+        # We assume here that our very simplistic Python program's RSS is in the range of
         # (1MB, PYTHON_OVERHEAD_MAX_SIZE)
         mem_usage = get_rss()
         self.assertGreater(mem_usage, 1 * 1024 * 1024)
@@ -64,7 +64,7 @@ class GetRSSTestCase(unittest.TestCase):
             gc.collect()
 
             delta2 = get_rss() - baseline_mem_usage
-            
+
         self.assertGreater(delta, block_size)
         self.assertLess(delta, self.PYTHON_OVERHEAD_MAX_SIZE + block_size)
         self.assertLess(delta2, block_size)
@@ -90,7 +90,7 @@ class GetRSSTestCase(unittest.TestCase):
             gc.collect()
 
             delta2 = get_rss() - baseline_mem_usage
-            
+
         self.assertGreater(delta, block_size * 2)
         self.assertLess(delta, (self.PYTHON_OVERHEAD_MAX_SIZE + block_size) * 2)
         self.assertLess(delta2, (block_size * 2))
@@ -98,11 +98,11 @@ class GetRSSTestCase(unittest.TestCase):
     def create_memory_eating_child(self, block_size):
         from psutil import Popen
         from subprocess import PIPE
-        return Popen([ sys.executable,  '-c', 
+        return Popen([ sys.executable,  '-c',
                        'eat_memory = "x" * %d ; ' % (block_size,) +
-                       'import sys ; ' + 
+                       'import sys ; ' +
                        'sys.stdout.write("x") ; ' +
-                       'sys.stdout.flush() ; ' + 
+                       'sys.stdout.flush() ; ' +
                        'sys.stdin.read(1)' ], stdin=PIPE, stdout=PIPE)
 
     def wait_for_child_to_be_ready(self, child):
@@ -114,7 +114,7 @@ class GetRSSTestCase(unittest.TestCase):
         # Our child waits for a single byte from stdin to exit.
         child.communicate('x')
         self.assertEqual(child.returncode, 0)
-            
+
     @contextmanager
     def gc_disabled(self):
         try:
