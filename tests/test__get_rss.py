@@ -107,7 +107,7 @@ class GetRSSTestCase(unittest.TestCase):
 
     def wait_for_child_to_be_ready(self, child):
         # Our child writes 'x' to its stdout pipe when it's ready - read it.
-        child_output = child.stdout.read(1)
+        child_output = child.stdout.read(1).decode()
         self.assertEqual(child_output, 'x')
 
     def wait_for_child_to_exit(self, child):

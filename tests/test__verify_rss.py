@@ -13,10 +13,10 @@ def eat_memory(amount):
     # Maybe it caches strings?
     global mem_pacman
     mem_pacman = ''
-    for i in xrange(amount / 1024):
+    for i in range(amount / 1024):
         tmp = ''
         seed = random.randint(0, 255)
-        for j in xrange(1024):
+        for j in range(1024):
             tmp = tmp + chr((seed + j) % 256)
         mem_pacman = mem_pacman + tmp
 
