@@ -112,7 +112,7 @@ class GetRSSTestCase(unittest.TestCase):
 
     def wait_for_child_to_exit(self, child):
         # Our child waits for a single byte from stdin to exit.
-        child.communicate('x')
+        child.communicate(b'x')
         self.assertEqual(child.returncode, 0)
 
     @contextmanager
