@@ -1,24 +1,15 @@
 import unittest
 import gc
-import random
+import os
 from time import sleep
 from infi.memuse import verify_rss, PotentialMemoryLeakError
 
 mem_pacman = ''
 
-random.seed(0)
-
 def eat_memory(amount):
-    # For some reason, allocating a constant string may result in Python not really allocating a new mem buffer.
-    # Maybe it caches strings?
     global mem_pacman
-    mem_pacman = ''
-    for i in range(amount / 1024):
-        tmp = ''
-        seed = random.randint(0, 255)
-        for j in range(1024):
-            tmp = tmp + chr((seed + j) % 256)
-        mem_pacman = mem_pacman + tmp
+    # https://stackoverflow.com/questions/7044044/
+    mem_pacman = os.urandom(amount)
 
 def clear_eat_memory():
     global mem_pacman
